@@ -14,21 +14,12 @@ contract Token {
     };
 
     struct Storage {
-        // maps an aztec address to its balance
-        balances: Map<Set<ValueNote, VALUE_NOTE_LEN>>,
+        // IMPLEMENT
     }
 
     impl Storage {
         fn init(context: Context) -> pub Self {
-            Storage {
-                balances: Map::new(
-                    context,
-                    1, // Storage slot
-                    |context, slot| {
-                        Set::new(context, slot, ValueNoteMethods)
-                    },
-                ),
-            }
+            // IMPLEMENT
         }
     }
    
@@ -37,10 +28,7 @@ contract Token {
         initial_supply: Field, 
         owner: Field
     )  {
-        let owner_balance = storage.balances.at(owner);  // Access the Set of the owner's ValueNotes from the "balances" Map
-        // increment(owner_balance, initial_supply, owner); // Increase owner's supply by specified amount
-        let mut note = ValueNote::new(initial_supply, owner); // Create a new ValueNote
-        owner_balance.insert(&mut note, true); // Insert the new ValueNote into the owner's Set
+        // IMPLEMENT
     }
     
     #[aztec(private)]
@@ -48,8 +36,7 @@ contract Token {
         amount: Field, 
         owner: Field
     )  {
-        let owner_balance = storage.balances.at(owner);
-        increment(owner_balance, amount, owner);
+        // IMPLEMENT
     }
 
     #[aztec(private)]
@@ -57,14 +44,7 @@ contract Token {
         amount: Field, 
         recipient: Field,
     )  {
-        let sender = context.msg_sender(); // set sender as msg.sender()
-
-        let sender_balance = storage.balances.at(sender); // get the sender's balance
-        decrement(sender_balance, amount, sender); // decrement sender balance by amount
-
-        // Creates new note for the recipient.
-        let recipient_balance = storage.balances.at(recipient); // get recipient's balance
-        increment(recipient_balance, amount, recipient); // increment recipient balance by amount
+        // IMPLEMENT
     }
 
     unconstrained fn get_balance(owner: Field) -> Field {
