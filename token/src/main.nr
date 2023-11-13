@@ -1,12 +1,11 @@
 contract Token {
-      use dep::std::option::Option;
     use dep::value_note::{
         balance_utils,
         utils::{increment, decrement},
         value_note::{VALUE_NOTE_LEN, ValueNote, ValueNoteMethods},
     };
     use dep::aztec::{
-        context::{PrivateContext, PublicContext, Context},
+        context::Context,
         note::{
             note_header::NoteHeader,
             utils as note_utils,
@@ -40,9 +39,7 @@ contract Token {
     )  {
         let storage = Storage::init(Context::private(&mut context)); // Initialize Storage struct with the private context
         let owner_balance = storage.balances.at(owner);  // Access the Set of the owner's ValueNotes from the "balances" Map
-        if (initial_supply != 0) {
-            increment(owner_balance, initial_supply, owner); // Increase owner's supply by specified amount
-        }
+        increment(owner_balance, initial_supply, owner); // Increase owner's supply by specified amount
     }
     
     #[aztec(private)]

@@ -35,7 +35,7 @@ describe('token', () => {
     let userA: AztecAddress;
     let userB: AztecAddress;
 
-    let contract: TokenContract;
+    let token: TokenContract;
 
     beforeAll(async () => {
         pxe = createPXEClient(PXE_URL);
@@ -51,8 +51,8 @@ describe('token', () => {
         userA = walletA.getCompleteAddress().address;
         userB = walletB.getCompleteAddress().address;
 
-        contract = await TokenContract.deploy(walletA, 1000n, userA).send().deployed();
-        console.log("Deployed token at ", contract.address.toString());
+        token = await TokenContract.deploy(walletA, 1000n, userA).send().deployed();
+        console.log("Deployed token at ", token.address.toString());
     }, 100_000);
 
     const awaitServerSynchronized = async (server: PXE) => {
@@ -63,15 +63,14 @@ describe('token', () => {
     };
 
     it('mint', async () => {
-        console.log(userB);
-        await contract.methods.mint(100n, userB).send().wait();
+        await token.methods.mint(100n, userB).send().wait();
+        const balance = await token.methods.get_balance(userB).view();
+        expect(balance).toEqual(100n);
     });
 
     it('transfer', async () => {
-
-    });
-
-    it('transfer authwit', async () => {
-
+        await token.methods.transfer(50n, userB).send().wait();
+        const balance = await token.methods.get_balance(userB).view();
+        expect(balance).toEqual(150n);
     });
 });

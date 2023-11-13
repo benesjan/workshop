@@ -6,8 +6,8 @@
     "clean": "rm -rf ./dest ./.tsbuildinfo",
     "start:sandbox": "npx @aztec/aztec-sandbox",
     "start": " yarn build && DEBUG='subscription*' node ./dest/index.js",
-    "compile:contracts": "aztec-cli compile ./contract --typescript ../src/types",
-    "test": "NODE_NO_WARNINGS=1 node --experimental-vm-modules $(yarn bin jest)"
+    "compile:token": "aztec-cli compile ./token --typescript ../src/types",
+    "test": "NODE_NO_WARNINGS=1 node --experimental-vm-modules $(yarn bin jest --runInBand)"
   },
   "dependencies": {
     "@aztec/aztec.js": "^0.14.2"
