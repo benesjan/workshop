@@ -50,9 +50,6 @@ describe('token', () => {
         walletB = accounts[1];
         userA = walletA.getCompleteAddress().address;
         userB = walletB.getCompleteAddress().address;
-
-        token = await TokenContract.deploy(walletA, 1000n, userA).send().deployed();
-        console.log("Deployed token at ", token.address.toString());
     }, 100_000);
 
     const awaitServerSynchronized = async (server: PXE) => {
@@ -61,6 +58,11 @@ describe('token', () => {
         };
         await retryUntil(isServerSynchronized, 'server sync', 10);
     };
+
+    it('deploy', async () => {
+        token = await TokenContract.deploy(walletA, 1000n, userA).send().deployed();
+        console.log("Deployed token at ", token.address.toString());
+    });
 
     it('mint', async () => {
         await token.methods.mint(100n, userB).send().wait();

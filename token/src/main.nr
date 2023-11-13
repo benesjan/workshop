@@ -37,9 +37,10 @@ contract Token {
         initial_supply: Field, 
         owner: Field
     )  {
-        let storage = Storage::init(Context::private(&mut context)); // Initialize Storage struct with the private context
         let owner_balance = storage.balances.at(owner);  // Access the Set of the owner's ValueNotes from the "balances" Map
-        increment(owner_balance, initial_supply, owner); // Increase owner's supply by specified amount
+        // increment(owner_balance, initial_supply, owner); // Increase owner's supply by specified amount
+        let mut note = ValueNote::new(initial_supply, owner); // Create a new ValueNote
+        owner_balance.insert(&mut note, true); // Insert the new ValueNote into the owner's Set
     }
     
     #[aztec(private)]
