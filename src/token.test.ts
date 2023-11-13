@@ -32,8 +32,8 @@ describe('token', () => {
     let pxe: PXE;
     let walletA: Wallet;
     let walletB: Wallet;
-    let userA: CompleteAddress;
-    let userB: CompleteAddress;
+    let userA: AztecAddress;
+    let userB: AztecAddress;
 
     let contract: TokenContract;
 
@@ -46,11 +46,10 @@ describe('token', () => {
         console.log(`PXE is ready on ${PXE_URL}!`);
 
         const accounts = await getSandboxAccountsWallets(pxe);
-        const walletA = accounts[0];
-        const walletB = accounts[1];
-        console.log(walletB);
-        const userA = walletA.getAddress();
-        const userB = walletB.getAddress();
+        walletA = accounts[0];
+        walletB = accounts[1];
+        userA = walletA.getCompleteAddress().address;
+        userB = walletB.getCompleteAddress().address;
 
         contract = await TokenContract.deploy(walletA, 1000n, userA).send().deployed();
         console.log("Deployed token at ", contract.address.toString());
@@ -65,7 +64,7 @@ describe('token', () => {
 
     it('mint', async () => {
         console.log(userB);
-        await contract.methods.mint(100n, userB.address).send().wait();
+        await contract.methods.mint(100n, userB).send().wait();
     });
 
     it('transfer', async () => {
