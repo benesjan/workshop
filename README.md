@@ -10,7 +10,7 @@ foundryup
 npm install -g @aztec/cli @aztec/aztec-sandbox
 
 3. Clone this repository
-git clone https://github.com/benesjan/token-workshop.git
+git clone https://github.com/benesjan/workshop.git
 
 4. Start anvil
 $ anvil
